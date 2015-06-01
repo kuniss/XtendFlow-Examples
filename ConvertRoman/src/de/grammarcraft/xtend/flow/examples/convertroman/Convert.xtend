@@ -4,6 +4,8 @@ import de.grammarcraft.xtend.flow.annotations.Integration
 import de.grammarcraft.xtend.flow.annotations.Port
 import de.grammarcraft.xtend.flow.annotations.Unit
 import de.grammarcraft.xtend.flow.annotations.Operation
+import java.util.List
+import de.grammarcraft.xtend.flow.unitlib.MapIt
 
 @Integration @Unit(
     inputPorts = #[
@@ -23,8 +25,8 @@ class Convert {
 	new() {
 		determine_number_type.romanNumber -> validate_roman_number
 		determine_number_type.arabicNumber -> validate_arabic_number
-		validate_arabic_number -> convert_to_roman
-		validate_roman_number -> convert_from_roman
+		validate_arabic_number.output -> convert_to_roman
+		validate_roman_number.output -> convert_from_roman
 	}
 }
 
@@ -51,7 +53,8 @@ class DetermineNumberType {
         @Port(name="input", type=String)
     ],
     outputPorts = #[
-        @Port(name="output", type=String)
+        @Port(name="output", type=String),
+        @Port(name="error", type=Exception)
     ]
 )
 class ValidateRomanNumber {
@@ -67,7 +70,8 @@ class ValidateRomanNumber {
         @Port(name="input", type=String)
     ],
     outputPorts = #[
-        @Port(name="output", type=String)
+        @Port(name="output", type=String),
+        @Port(name="error", type=Exception)
     ]
 )
 class ValidateArabicNumber {
@@ -94,12 +98,30 @@ class ConvertToRoman {
         @Port(name="input", type=String)
     ],
     outputPorts = #[
-        @Port(name="output", type=String)
+        @Port(name="output", type=Integer)
     ]
 )
 class ConvertFromRoman {
-	val map_to_values = new MapToValues
-	val apply_substraction_rule = new ApplySubstractionRule
-	val sum = new Sum
+	val map_to_values = new MapIt<String, List<Integer>>("map_to_values", [mapRomanNumberToValues])
+	val apply_substraction_rule = new MapIt<List<Integer>, List<Integer>>("apply_substration_rule", [applySubstrationRule])
+	val sum = new MapIt<List<Integer>, Integer>("sum", [reduce[i,j|i+j]])
+	
+	new() {
+		input -> map_to_values
+		map_to_values -> apply_substraction_rule
+		apply_substraction_rule -> sum
+		sum -> output
+	}
+	
+	private static def List<Integer> mapRomanNumberToValues(String romanNumber) {
+		// TODO implement mapRomanNumberToValues and move to operation
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+	}
+	
+	private static def List<Integer> applySubstrationRule(List<Integer> valueList) {
+		// TODO implement applySubstrationRule and move to operation
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+	}
+	
 }
 
