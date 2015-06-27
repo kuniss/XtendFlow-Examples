@@ -1,0 +1,67 @@
+package de.grammarcraft.xtend.flow.examples.convertroman.operations.conversions
+
+import de.grammarcraft.xtend.flow.annotations.Port
+import de.grammarcraft.xtend.flow.annotations.Unit
+import de.grammarcraft.xtend.flow.annotations.Operation
+import java.util.regex.Pattern
+
+@Operation @Unit(
+    inputPorts = #[
+        @Port(name="input", type=String)
+    ],
+    outputPorts = #[
+        @Port(name="romanNumber", type=String),
+        @Port(name="arabicNumber", type=Integer)
+    ]
+)
+class DetermineNumberType {
+    
+    override process$input(String number) {
+        try {
+            arabicNumber <= Integer.parseInt(number);
+        }
+        catch (NumberFormatException e) {
+            romanNumber <= number
+        }
+    }
+}
+
+@Operation @Unit(
+    inputPorts = #[
+        @Port(name="input", type=String)
+    ],
+    outputPorts = #[
+        @Port(name="output", type=String),
+        @Port(name="error", type=String)
+    ]
+)
+class ValidateRomanNumber {
+    
+    override process$input(String romanNumber) {
+        if (Pattern.matches("^[IVXLCDM]+$", romanNumber.toUpperCase))
+            output <= romanNumber
+        else
+            error <= '''Invalid roman digit found in "«romanNumber»"''';
+    }
+    
+}
+
+@Operation @Unit(
+    inputPorts = #[
+        @Port(name="input", type=Integer)
+    ],
+    outputPorts = #[
+        @Port(name="output", type=Integer),
+        @Port(name="error", type=String)
+    ]
+)
+class ValidateArabicNumber {
+    
+    override process$input(Integer arabicNumber) {
+        if (arabicNumber >= 0 && arabicNumber <= 3000)
+            output <= arabicNumber
+        else
+            error <= '''Invalid arabic number "«arabicNumber»"; must be in range 1..3000''';
+    }
+    
+}
