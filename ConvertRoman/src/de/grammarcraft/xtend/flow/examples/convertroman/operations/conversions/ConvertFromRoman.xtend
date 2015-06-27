@@ -1,13 +1,12 @@
 package de.grammarcraft.xtend.flow.examples.convertroman.operations.conversions
 
-import de.grammarcraft.xtend.flow.annotations.Integration
+import de.grammarcraft.xtend.flow.annotations.Operation
 import de.grammarcraft.xtend.flow.annotations.Port
 import de.grammarcraft.xtend.flow.annotations.Unit
-import de.grammarcraft.xtend.flow.unitlib.MapIt
 import java.util.ArrayList
 import java.util.List
 
-@Integration @Unit(
+@Operation @Unit(
     inputPorts = #[
         @Port(name="input", type=String)
     ],
@@ -15,16 +14,12 @@ import java.util.List
         @Port(name="output", type=String)
     ]
 )
-class ConvertFromRoman {
-    val map_to_values = new MapIt<String, List<Integer>>("map_to_values", [mapRomanNumberToValues])
-    val apply_substraction_rule = new MapIt<List<Integer>, List<Integer>>("apply_substration_rule", [applySubstrationRule])
-    val sum = new MapIt<List<Integer>, String>("sum", [Integer.toString(reduce[i,j|i+j])])
-    
-    new() {
-        input -> map_to_values
-        map_to_values -> apply_substraction_rule
-        apply_substraction_rule -> sum
-        sum -> output
+class ConvertFromRoman 
+{
+    override process$input(String romanNumber) {
+        val values = mapRomanNumberToValues(romanNumber)
+        val negatedValues = applySubstrationRule(values)
+        output <= Integer.toString(negatedValues.reduce[i,j|i+j])
     }
     
     static val mapR2I = #{
@@ -50,6 +45,5 @@ class ConvertFromRoman {
         }
 
         return negatedValues;
-    }
-    
+    }    
 }

@@ -1,13 +1,12 @@
 package de.grammarcraft.xtend.flow.examples.convertroman.operations.conversions
 
-import de.grammarcraft.xtend.flow.annotations.Integration
+import de.grammarcraft.xtend.flow.annotations.Operation
 import de.grammarcraft.xtend.flow.annotations.Port
 import de.grammarcraft.xtend.flow.annotations.Unit
-import de.grammarcraft.xtend.flow.unitlib.MapIt
 import java.util.ArrayList
 import java.util.List
 
-@Integration @Unit(
+@Operation @Unit(
     inputPorts = #[
         @Port(name="input", type=Integer)
     ],
@@ -15,18 +14,14 @@ import java.util.List
         @Port(name="output", type=String)
     ]
 )
-class ConvertToRoman {
-    val factorize = new MapIt<Integer, List<Integer>>("factorize", [factorizeArabicNumber])
-    val map_factors_to_digits = new MapIt<List<Integer>, List<String>>("map_factors_to_digits", [mapFactorsToDigits])
-    val build_from_digits = new MapIt<List<String>, String>("Build_from_digits", [join])
-    
-    new() {
-        input -> factorize
-        factorize -> map_factors_to_digits
-        map_factors_to_digits -> build_from_digits
-        build_from_digits -> output
+class ConvertToRoman 
+{
+    override process$input(Integer arabicNumber) {
+        val factors = factorizeArabicNumber(arabicNumber)
+        val digits = mapFactorsToDigits(factors)
+        output <= digits.join
     }
-        
+
     val MAP = #{
         1000 -> "M", 
         900 -> "CM", 
@@ -60,6 +55,4 @@ class ConvertToRoman {
     private def List<String> mapFactorsToDigits(List<Integer> factors) {
         factors.map[f | MAP.get(f)]
     }
-
-            
 }
