@@ -6,6 +6,7 @@ import de.grammarcraft.xtend.flow.examples.convertroman.operations.DisplayError
 import de.grammarcraft.xtend.flow.examples.convertroman.operations.DisplayResult
 import de.grammarcraft.xtend.flow.examples.convertroman.operations.ReadNumberToConvert
 import de.grammarcraft.xtend.flow.examples.convertroman.integration.body.Body
+import static de.grammarcraft.xtend.flow.data.None.None
 
 class Head 
 {
@@ -25,7 +26,7 @@ class Head
 	}
 	
 	def run() {
-	    entry_point <= "start"
+	    entry_point <= None
 	}
 	
 }
