@@ -12,12 +12,14 @@ class Head
 {
     ReadNumberToConvert entry_point
     
-    new(IInputProvider in, Body convert, IOutputProvider out) 
+    new(IInputProvider input, Body body, IOutputProvider output) 
     {
-    	val read_number_to_convert = new ReadNumberToConvert(in)
-	    val display_result = new DisplayResult(out)
-	    val display_error = new DisplayError(out)
+    	val read_number_to_convert = new ReadNumberToConvert(input)
+	    val display_result = new DisplayResult(output)
+	    val display_error = new DisplayError(output)
+	    val convert = body
 	    
+	    // setup flow
 	    read_number_to_convert.output -> convert
 		convert.result -> display_result
 		convert.error -> display_error

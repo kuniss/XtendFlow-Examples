@@ -10,8 +10,11 @@ class Program
     def static void main(String[] args) 
     {
         val providers = new Providers
+        val input = providers as IInputProvider
+        val output = providers as IOutputProvider
+        
         val body = new Body
-        val head = new Head(providers as IInputProvider, body, providers as IOutputProvider)
+        val head = new Head(input, body, output)
         
         head.run()
     } 

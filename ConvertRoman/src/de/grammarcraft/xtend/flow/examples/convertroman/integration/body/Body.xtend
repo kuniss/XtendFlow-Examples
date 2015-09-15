@@ -14,8 +14,8 @@ import de.grammarcraft.xtend.flow.examples.convertroman.operations.conversions.V
         @Port(name="number", type=String)
     ],
     outputPorts = #[
-        @Port(name="result", type=String),
-        @Port(name="error", type=String)
+        @Port(name="result", type=String), // onSuccess
+        @Port(name="error", type=String)   // onError
     ]
 )
 class Body {
@@ -27,14 +27,17 @@ class Body {
 	
 	new() {
 	    number -> determine_number_type
+	    
 		determine_number_type.romanNumber -> validate_roman_number
 		determine_number_type.arabicNumber -> validate_arabic_number
-		validate_arabic_number.output -> convert_to_roman
-		validate_roman_number.output -> convert_from_roman
-		convert_to_roman -> result
-		convert_from_roman -> result
 		
-		validate_arabic_number.error -> error
-		validate_roman_number.error -> error
+		validate_roman_number.valid -> convert_from_roman
+		validate_roman_number.invalid -> error
+
+		validate_arabic_number.valid -> convert_to_roman
+		validate_arabic_number.invalid -> error
+
+		convert_to_roman -> result
+		convert_from_roman -> result		
 	}
 }

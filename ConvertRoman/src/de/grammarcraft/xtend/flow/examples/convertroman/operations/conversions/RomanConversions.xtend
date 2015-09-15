@@ -31,17 +31,17 @@ class DetermineNumberType {
         @Port(name="input", type=String)
     ],
     outputPorts = #[
-        @Port(name="output", type=String),
-        @Port(name="error", type=String)
+        @Port(name="valid", type=String),
+        @Port(name="invalid", type=String)
     ]
 )
 class ValidateRomanNumber {
     
     override process$input(String romanNumber) {
         if (Pattern.matches("^[IVXLCDM]+$", romanNumber.toUpperCase))
-            output <= romanNumber
+            valid <= romanNumber
         else
-            error <= '''Invalid roman digit found in "«romanNumber»"''';
+            invalid <= '''Invalid roman digit found in "«romanNumber»"''';
     }
     
 }
@@ -51,17 +51,17 @@ class ValidateRomanNumber {
         @Port(name="input", type=Integer)
     ],
     outputPorts = #[
-        @Port(name="output", type=Integer),
-        @Port(name="error", type=String)
+        @Port(name="valid", type=Integer),
+        @Port(name="invalid", type=String)
     ]
 )
 class ValidateArabicNumber {
     
     override process$input(Integer arabicNumber) {
         if (arabicNumber >= 0 && arabicNumber <= 3000)
-            output <= arabicNumber
+            valid <= arabicNumber
         else
-            error <= '''Invalid arabic number "«arabicNumber»"; must be in range 1..3000''';
+            invalid <= '''Invalid arabic number "«arabicNumber»"; must be in range 1..3000''';
     }
     
 }
