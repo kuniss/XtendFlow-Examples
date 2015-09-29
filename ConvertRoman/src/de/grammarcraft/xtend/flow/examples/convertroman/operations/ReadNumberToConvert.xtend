@@ -5,6 +5,7 @@ import de.grammarcraft.xtend.flow.annotations.Port
 import de.grammarcraft.xtend.flow.annotations.Unit
 import de.grammarcraft.xtend.flow.examples.convertroman.contracts.IInputProvider
 import de.grammarcraft.xtend.flow.data.None
+import static de.grammarcraft.xtend.flow.data.None.None
 
 @Operation @Unit(
     outputPorts = #[
@@ -21,6 +22,10 @@ class ReadNumberToConvert {
     
     override process$start(None msg) {
         output <= this.inputProvider.read_number_to_convert()
+    }
+    
+    def run() {
+        process$start(None)
     }
 	
 }
