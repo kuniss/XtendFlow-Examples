@@ -19,7 +19,7 @@ class Head
 	    val convert = body
 	    
 	    // setup flow
-	    read_number_to_convert.output -> convert
+	    read_number_to_convert -> convert
 		convert.result -> display_result
 		convert.error -> display_error
 	}
