@@ -7,7 +7,7 @@ repositories.jcenter()
 
 dependencies {
   compile 'org.eclipse.xtend:org.eclipse.xtend.lib:2.8.+'
-  compile 'de.grammarcraft:de.grammarcraft.xtend.flow:0.4.+'
+  compile 'de.grammarcraft:de.grammarcraft.xtend.flow:0.5.+'
   compile 'junit:junit:4.+' 
 }
 
@@ -17,5 +17,5 @@ sourceSets {
 }
 
 task wrapper(type: Wrapper) {
-	gradleVersion = '2.7'
+	gradleVersion = '2.11'
 }
