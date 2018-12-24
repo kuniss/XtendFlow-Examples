@@ -7,6 +7,8 @@ import de.grammarcraft.xtend.flow.examples.convertroman.operations.DisplayResult
 import de.grammarcraft.xtend.flow.examples.convertroman.operations.ReadNumberToConvert
 import de.grammarcraft.xtend.flow.examples.convertroman.integration.body.Body
 
+import static de.grammarcraft.xtend.flow.data.None.None
+
 class Head 
 {
     ReadNumberToConvert read_number_to_convert
@@ -25,7 +27,7 @@ class Head
 	}
 	
 	def run() {
-	    read_number_to_convert.run
+	    read_number_to_convert <= None
 	}
 	
 }
