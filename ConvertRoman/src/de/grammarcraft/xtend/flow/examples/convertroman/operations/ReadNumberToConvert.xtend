@@ -3,8 +3,8 @@ package de.grammarcraft.xtend.flow.examples.convertroman.operations
 import de.grammarcraft.xtend.flow.annotations.Operation
 import de.grammarcraft.xtend.flow.annotations.Port
 import de.grammarcraft.xtend.flow.annotations.Unit
-import de.grammarcraft.xtend.flow.examples.convertroman.contracts.IInputProvider
 import de.grammarcraft.xtend.flow.data.None
+import java.util.Scanner
 
 @Operation @Unit(
     outputPorts = #[
@@ -13,13 +13,12 @@ import de.grammarcraft.xtend.flow.data.None
 )
 class ReadNumberToConvert {
 	
-    IInputProvider inputProvider
-    
-    new(IInputProvider inputProvider) {
-        this.inputProvider = inputProvider
-    }
-    
     override process$start(None msg) {
-        output <= this.inputProvider.read_number_to_convert()
+        output <= [
+            val s = new Scanner(System.in);
+            print('Enter roman or arabic number: ')
+            s.nextLine().trim()
+        ]
     }
+    
 }

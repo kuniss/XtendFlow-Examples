@@ -1,9 +1,8 @@
 package de.grammarcraft.xtend.flow.examples.convertroman.operations
 
 import de.grammarcraft.xtend.flow.annotations.Operation
-import de.grammarcraft.xtend.flow.annotations.Unit
 import de.grammarcraft.xtend.flow.annotations.Port
-import de.grammarcraft.xtend.flow.examples.convertroman.contracts.IOutputProvider
+import de.grammarcraft.xtend.flow.annotations.Unit
 
 @Operation @Unit(
     inputPorts = #[
@@ -12,14 +11,13 @@ import de.grammarcraft.xtend.flow.examples.convertroman.contracts.IOutputProvide
 )
 class DisplayError {
     
-    IOutputProvider outputProvider
-    
-    new (IOutputProvider outputProvider) {
-        this.outputProvider = outputProvider
-    }
-    
     override process$error(String msg) {
-        this.outputProvider.display_error(msg)
+        display_error(msg)
     }
+    
+    private def display_error(String errorMessage) {
+        println('''Error: «errorMessage»''')
+    }
+    
     
 }

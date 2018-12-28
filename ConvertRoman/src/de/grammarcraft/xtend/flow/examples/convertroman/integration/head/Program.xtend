@@ -1,21 +1,26 @@
 package de.grammarcraft.xtend.flow.examples.convertroman.integration.head
 
-import de.grammarcraft.xtend.flow.examples.convertroman.operations.providers.Providers
-import de.grammarcraft.xtend.flow.examples.convertroman.contracts.IInputProvider
-import de.grammarcraft.xtend.flow.examples.convertroman.contracts.IOutputProvider
-import de.grammarcraft.xtend.flow.examples.convertroman.integration.body.Body
+import de.grammarcraft.xtend.flow.examples.convertroman.operations.DisplayError
+import de.grammarcraft.xtend.flow.examples.convertroman.operations.DisplayResult
+import de.grammarcraft.xtend.flow.examples.convertroman.operations.ReadNumberToConvert
+import de.grammarcraft.xtend.flow.examples.convertroman.integration.body.Convert
+import static de.grammarcraft.xtend.flow.data.None.None
 
 class Program 
 {
     def static void main(String[] args) 
     {
-        val providers = new Providers
-        val input = providers as IInputProvider
-        val output = providers as IOutputProvider
-        
-        val body = new Body
-        val head = new Head(input, body, output)
-        
-        head.run()
+        val read_number_to_convert = new ReadNumberToConvert
+        val display_result = new DisplayResult
+	    val display_error = new DisplayError
+	    val convert = new Convert
+	    
+	    // setup flow
+	    read_number_to_convert -> convert
+		convert.result -> display_result
+		convert.error -> display_error
+		
+		// start flow
+		read_number_to_convert <= None
     } 
 }

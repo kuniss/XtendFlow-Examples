@@ -18,7 +18,7 @@ import de.grammarcraft.xtend.flow.examples.convertroman.operations.conversions.V
         @Port(name="error", type=String)   // onError
     ]
 )
-class Body {
+class Convert {
 	val determine_number_type = new DetermineNumberType
 	val validate_roman_number = new ValidateRomanNumber
 	val validate_arabic_number = new ValidateArabicNumber
